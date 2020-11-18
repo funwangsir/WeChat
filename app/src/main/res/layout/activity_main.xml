@@ -1,10 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/botom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawableTop="@drawable/menu_log_1"
+            android:textColor="@drawable/menu_text"
+            android:text="微信"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawableTop="@drawable/menu_log_2"
+            android:textColor="@drawable/menu_text"
+            android:text="通讯录"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawableTop="@drawable/menu_log_3"
+            android:textColor="@drawable/menu_text"
+            android:text="发现"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:drawableTop="@drawable/menu_log_4"
+            android:textColor="@drawable/menu_text"
+            android:layout_weight="1"
+            android:text="我"
+            android:textSize="16sp"/>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/botom_bar"
+        android:id="@+id/ly_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</RelativeLayout>
