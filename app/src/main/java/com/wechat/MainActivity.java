@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initBar();
         bottom_bar_1.performClick();//模拟加载进去的第一次点击，选中第一个
+        System.out.println("this is Chen");
     }
 
     //初始化四个按钮的点击事件
