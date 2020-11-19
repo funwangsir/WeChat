@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.View;
-
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.FrameLayout;
-
 import com.wechat.Fragments.Fragment1;
 import com.wechat.Fragments.Fragment2;
 import com.wechat.Fragments.Fragment3;
@@ -32,17 +30,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView bottom_bar_4_notification;
 
     //对应四个按钮的碎片对象
-    private Fragment1 fg1;
-    private Fragment1 fg2;
-    private Fragment1 fg3;
-    private Fragment1 fg4;
+    private Fragment1 fg1 = new Fragment1();
+    private Fragment2 fg2 = new Fragment2();
+    private Fragment3 fg3 = new Fragment3();
+    private Fragment4 fg4 = new Fragment4();
+
+    private RelativeLayout topBar;//顶部状态栏
+    private LinearLayout bottomBar;//底部状态栏
+
+    private TextView topTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initBar();
+        initControl();
 
         notificationStatus();
 
@@ -52,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    //初始化四个按钮的点击事件
-    public void initBar() {
+    //初始化一些控件和一些事件
+    public void initControl() {
         bottom_bar_1 = (TextView) findViewById(R.id.bottom_bar_1);
         bottom_bar_2 = (TextView) findViewById(R.id.bottom_bar_2);
         bottom_bar_3 = (TextView) findViewById(R.id.bottom_bar_3);
@@ -63,10 +66,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottom_bar_2.setOnClickListener(this);
         bottom_bar_3.setOnClickListener(this);
         bottom_bar_4.setOnClickListener(this);
+
+        topBar = (RelativeLayout)findViewById(R.id.top_toolbar);
+        bottomBar = (LinearLayout)findViewById(R.id.bottom_bar);
+
+        topTitle = (TextView) findViewById(R.id.top_toolbar_title);
     }
 
     //重置所有文本的选中状态
-    private void setSelected(){
+    private void clearSelected(){
         bottom_bar_1.setSelected(false);
         bottom_bar_2.setSelected(false);
         bottom_bar_3.setSelected(false);
@@ -99,27 +107,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bottom_bar_1://微信
-                setSelected();//清除所有按钮选中
-                bottom_bar_1.setSelected(true);//设置当前按钮选中
-                replaceFragment(new Fragment1());//更新当前的碎片
+                bottomBar1();
                 break;
             case R.id.bottom_bar_2://通讯录
-                setSelected();
-                bottom_bar_2.setSelected(true);
-                replaceFragment(new Fragment2());
+                bottomBar2();
                 break;
             case R.id.bottom_bar_3://发现
-                setSelected();
-                bottom_bar_3.setSelected(true);
-                replaceFragment(new Fragment3());
+                bottomBar3();
                 break;
             case R.id.bottom_bar_4://我
-                setSelected();
-                bottom_bar_4.setSelected(true);
-                replaceFragment(new Fragment4());
+                bottomBar4();
                 break;
             default:
                 break;
         }
+    }
+
+    //四个按钮执行的事件
+    public void bottomBar1(){
+        clearSelected();//清除所有按钮选中
+        bottom_bar_1.setSelected(true);//设置当前按钮选中
+        replaceFragment(fg1);//更新当前的碎片
+        topBar.setVisibility(View.VISIBLE);//显示当前顶部状态栏
+        topTitle.setText("微信");
+    }
+    public void bottomBar2(){
+        clearSelected();
+        bottom_bar_2.setSelected(true);
+        replaceFragment(fg2);
+        topBar.setVisibility(View.VISIBLE);//显示当前顶部状态栏
+        topTitle.setText("通讯录");
+    }
+    public void bottomBar3(){
+        clearSelected();
+        bottom_bar_3.setSelected(true);
+        replaceFragment(fg3);
+        topBar.setVisibility(View.VISIBLE);//显示当前顶部状态栏
+        topTitle.setText("发现");
+    }
+    public void bottomBar4(){
+        clearSelected();
+        bottom_bar_4.setSelected(true);
+        replaceFragment(fg4);
+        topBar.setVisibility(View.INVISIBLE); //我的页面不显示顶部状态栏
     }
 }
