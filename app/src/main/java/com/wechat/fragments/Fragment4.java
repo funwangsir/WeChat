@@ -1,4 +1,4 @@
-package com.wechat.Fragments;
+package com.wechat.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment;
 
 import com.wechat.R;
 
-public class Fragment2 extends Fragment {
+public class Fragment4 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.menu_fragment_2,container,false);
+        View view = inflater.inflate(R.layout.menu_fragment_4,container,false);
         return view;
     }
 }

@@ -4,15 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.wechat.Fragments.Fragment1;
-import com.wechat.Fragments.Fragment2;
-import com.wechat.Fragments.Fragment3;
-import com.wechat.Fragments.Fragment4;
+import com.wechat.fragments.Fragment1;
+import com.wechat.fragments.Fragment2;
+import com.wechat.fragments.Fragment3;
+import com.wechat.fragments.Fragment4;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout topBar;//顶部状态栏
     private LinearLayout bottomBar;//底部状态栏
 
-    private TextView topTitle;
+    private TextView topTitle;//顶部的文字标题
+    private ImageButton wechatAddButton;//顶部的添加按钮
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,55 +64,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
-    //初始化一些控件和一些事件
+    //初始化一些控件，绑定点击事件
     public void initControl() {
         bottom_bar_1 = (TextView) findViewById(R.id.bottom_bar_1);
         bottom_bar_2 = (TextView) findViewById(R.id.bottom_bar_2);
         bottom_bar_3 = (TextView) findViewById(R.id.bottom_bar_3);
         bottom_bar_4 = (TextView) findViewById(R.id.bottom_bar_4);
 
+
+
+        topBar = (RelativeLayout) findViewById(R.id.top_toolbar);
+        bottomBar = (LinearLayout) findViewById(R.id.bottom_bar);
+
+        topTitle = (TextView) findViewById(R.id.top_toolbar_title);
+        wechatAddButton = (ImageButton) findViewById(R.id.wechat_add);
+
+        //绑定点击事件
         bottom_bar_1.setOnClickListener(this);
         bottom_bar_2.setOnClickListener(this);
         bottom_bar_3.setOnClickListener(this);
         bottom_bar_4.setOnClickListener(this);
-
-        topBar = (RelativeLayout)findViewById(R.id.top_toolbar);
-        bottomBar = (LinearLayout)findViewById(R.id.bottom_bar);
-
-        topTitle = (TextView) findViewById(R.id.top_toolbar_title);
+        wechatAddButton.setOnClickListener(this);
     }
 
-    //重置所有文本的选中状态
-    private void clearSelected(){
-        bottom_bar_1.setSelected(false);
-        bottom_bar_2.setSelected(false);
-        bottom_bar_3.setSelected(false);
-        bottom_bar_4.setSelected(false);
-    }
-
-    //隐藏与显示小红点
-    public void notificationStatus(){
-        bottom_bar_1_notification = (TextView)findViewById(R.id.bottom_bar_1_notification);
-        bottom_bar_2_notification = (TextView)findViewById(R.id.bottom_bar_2_notification);
-        bottom_bar_3_notification = (TextView)findViewById(R.id.bottom_bar_3_notification);
-        bottom_bar_4_notification = (TextView)findViewById(R.id.bottom_bar_4_notification);
-
-
-        bottom_bar_1_notification.setVisibility(View.INVISIBLE);//隐藏
-        bottom_bar_2_notification.setVisibility(View.INVISIBLE);
-        bottom_bar_3_notification.setVisibility(View.INVISIBLE);
-        bottom_bar_4_notification.setVisibility(View.INVISIBLE);
-    }
-
-    //重新加载新的碎片
-    public void replaceFragment(Fragment fragment){
-        FragmentManager fManager = getSupportFragmentManager();
-        FragmentTransaction fTransaction = fManager.beginTransaction();
-        fTransaction.replace(R.id.weChat_Menu_content,fragment);
-        fTransaction.commit();
-    }
-
+    //监听所有点击事件
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -118,37 +103,112 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bottom_bar_4://我
                 bottomBar4();
                 break;
+            case R.id.wechat_add://顶部 添加好友
+                initPopWindow(view);//显示悬浮框
+                break;
             default:
                 break;
         }
     }
 
+    //重置所有文本的选中状态
+    private void clearSelected() {
+        bottom_bar_1.setSelected(false);
+        bottom_bar_2.setSelected(false);
+        bottom_bar_3.setSelected(false);
+        bottom_bar_4.setSelected(false);
+    }
+
+    //隐藏与显示小红点
+    public void notificationStatus() {
+        bottom_bar_1_notification = (TextView) findViewById(R.id.bottom_bar_1_notification);
+        bottom_bar_2_notification = (TextView) findViewById(R.id.bottom_bar_2_notification);
+        bottom_bar_3_notification = (TextView) findViewById(R.id.bottom_bar_3_notification);
+        bottom_bar_4_notification = (TextView) findViewById(R.id.bottom_bar_4_notification);
+
+
+        bottom_bar_1_notification.setVisibility(View.INVISIBLE);//隐藏
+        bottom_bar_2_notification.setVisibility(View.INVISIBLE);
+        bottom_bar_3_notification.setVisibility(View.INVISIBLE);
+        bottom_bar_4_notification.setVisibility(View.INVISIBLE);
+    }
+
+    //重新加载新的碎片
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fManager = getSupportFragmentManager();
+        FragmentTransaction fTransaction = fManager.beginTransaction();
+        fTransaction.replace(R.id.weChat_Menu_content, fragment);
+        fTransaction.commit();
+    }
+
+
     //四个按钮执行的事件
-    public void bottomBar1(){
+    public void bottomBar1() {
         clearSelected();//清除所有按钮选中
         bottom_bar_1.setSelected(true);//设置当前按钮选中
         replaceFragment(fg1);//更新当前的碎片
         topBar.setVisibility(View.VISIBLE);//显示当前顶部状态栏
         topTitle.setText("微信");
+
+        //加载聊天记录和消息列表
     }
-    public void bottomBar2(){
+
+    public void bottomBar2() {
         clearSelected();
         bottom_bar_2.setSelected(true);
         replaceFragment(fg2);
         topBar.setVisibility(View.VISIBLE);//显示当前顶部状态栏
         topTitle.setText("通讯录");
     }
-    public void bottomBar3(){
+
+    public void bottomBar3() {
         clearSelected();
         bottom_bar_3.setSelected(true);
         replaceFragment(fg3);
         topBar.setVisibility(View.VISIBLE);//显示当前顶部状态栏
         topTitle.setText("发现");
     }
-    public void bottomBar4(){
+
+    public void bottomBar4() {
         clearSelected();
         bottom_bar_4.setSelected(true);
         replaceFragment(fg4);
         topBar.setVisibility(View.INVISIBLE); //我的页面不显示顶部状态栏
     }
+
+
+    private void initPopWindow(View v) {
+        View view = LayoutInflater.from(this).inflate(R.layout.add_list, null, false);
+
+        //1.构造一个PopupWindow，参数依次是加载的View，宽高
+        final PopupWindow popWindow = new PopupWindow(view,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+        //这些为了点击非PopupWindow区域，PopupWindow会消失的
+        // 如果没有下面的代码的话，你会发现，当你把PopupWindow显示出来了
+        //无论你按多少次后退键 PopupWindow并不会关闭，而且退不出程序
+        // 加上下述代码可以解决这个问题
+        popWindow.setTouchable(true);
+        popWindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+                // 这里如果返回true的话，touch事件将被拦截
+                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
+            }
+        });
+        popWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));    //要为popWindow设置一个背景才有效
+
+        popWindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED);
+        int i = popWindow.getContentView().getMeasuredWidth();
+        //设置popupWindow显示的位置，参数依次是参照View，x轴的偏移量，y轴的偏移量
+        popWindow.showAsDropDown(v,-i+120, 40);
+    }
+
 }
+
+
+
+
+
+
