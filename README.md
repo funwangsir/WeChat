@@ -13,7 +13,7 @@
 ##### 2.使用图片log问题  
 Android中的小图片logo均使用**svg**图片，这样才能保证图片不失真，素材可以自行去阿里矢量图下载  
 图片logo尺寸：32  
-图片logo颜色：可以将微信log截图，然后去这个网站(http://www.jiniannet.com/Page/allcolor)取到颜色  
+图片logo颜色：可以将微信log截图，然后去这个网站取到颜色：http://www.jiniannet.com/Page/allcolor  
 
 Android中使用**svg**图片的方式  
 1.先将svg图片下载到本地  
