@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="这是Frame"
+        android:text="我"
         android:textSize="20sp"/>
 
 </LinearLayout>
