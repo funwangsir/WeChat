@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+<!--    顶部状态栏的主题色 -->
+    <color name="colorPrimary">#EDEDED</color>
+    <color name="colorPrimaryDark">#EDEDED</color>
+    <color name="colorAccent">#4C4C4C</color><!--    悬浮控件的颜色 -->
 
     <!--以上三种为系统自带基本主题色-->
     <color name="wechatlog">#07C160</color> <!-- 底部导航log选中颜色 -->
     <color name="wecharlog_defaut">#707070</color> <!-- 底部导航log默认未选中颜色 -->
     <color name="bottom_bar_bg">#F7F7F7</color><!-- 底部状态栏背景色 -->
-
+    <color name="top_bar_bg">#EDEDED</color><!-- 顶部状态栏背景色 -->
 
     <color name="white">#ffffff</color> <!-- 白色 -->
     <color name="ivory">#fffff0</color> <!-- 象牙色 -->

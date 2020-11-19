@@ -7,6 +7,46 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <!--    顶部状态栏-->
+    <RelativeLayout
+        android:id="@+id/top_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/top_bar_bg"
+        >
+        <TextView
+            android:id="@+id/top_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="微信"
+            android:textSize="24sp"
+            android:textColor="#171717"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            />
+        <ImageButton
+            android:id="@+id/wechat_search1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search"
+            android:background="@color/top_bar_bg"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/wechat_add"
+            android:layout_marginRight="20dp"
+            />
+        <ImageButton
+            android:id="@+id/wechat_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:background="@color/top_bar_bg"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"/>
+    </RelativeLayout>
+
+<!--    底部状态栏-->
     <LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
@@ -128,10 +168,11 @@
         </RelativeLayout>
     </LinearLayout>
 
-<!--    碎片，用于充当四个主页面的容器-->
+<!--   帧布局，用于充当四个主页面的碎片容器-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/top_toolbar"
         android:layout_above="@id/bottom_bar"
         android:id="@+id/weChat_Menu_content">
 
