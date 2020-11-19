@@ -12,53 +12,128 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/bottom_bar_1"
+        android:orientation="horizontal"
+        android:background="@color/bottom_bar_bg">
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:drawableTop="@drawable/menu_log_1"
-            android:textColor="@drawable/menu_text"
-            android:text="微信"
-            android:textSize="16sp"/>
-        <TextView
-            android:id="@+id/bottom_bar_2"
+            android:layout_weight="1">
+<!--            文字+图标-->
+            <TextView
+                android:id="@+id/bottom_bar_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:drawableTop="@drawable/menu_log_1"
+                android:textColor="@drawable/menu_text"
+                android:text="微信"
+                android:textSize="16sp"/>
+<!--            小红点-->
+            <TextView
+                android:id="@+id/bottom_bar_1_notification"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/menu_notification"
+                android:gravity="center"
+                android:text="2"
+                android:textSize="15sp"
+                android:textColor="#fff"
+                android:layout_marginLeft="-45dp"
+                android:layout_toRightOf="@+id/bottom_bar_1"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:drawableTop="@drawable/menu_log_2"
-            android:textColor="@drawable/menu_text"
-            android:text="通讯录"
-            android:textSize="16sp"/>
-        <TextView
-            android:id="@+id/bottom_bar_3"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/bottom_bar_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:drawableTop="@drawable/menu_log_2"
+                android:textColor="@drawable/menu_text"
+                android:text="通讯录"
+                android:textSize="16sp"/>
+            <!--            小红点-->
+            <TextView
+                android:id="@+id/bottom_bar_2_notification"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/menu_notification"
+                android:gravity="center"
+                android:text="2"
+                android:textSize="15sp"
+                android:textColor="#fff"
+                android:layout_marginLeft="-45dp"
+                android:layout_toRightOf="@+id/bottom_bar_2"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:drawableTop="@drawable/menu_log_3"
-            android:textColor="@drawable/menu_text"
-            android:text="发现"
-            android:textSize="16sp"/>
-        <TextView
-            android:id="@+id/bottom_bar_4"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/bottom_bar_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:drawableTop="@drawable/menu_log_3"
+                android:textColor="@drawable/menu_text"
+                android:text="发现"
+                android:textSize="16sp"/>
+            <!--            小红点-->
+            <TextView
+                android:id="@+id/bottom_bar_3_notification"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/menu_notification"
+                android:gravity="center"
+                android:text="2"
+                android:textSize="15sp"
+                android:textColor="#fff"
+                android:layout_marginLeft="-45dp"
+                android:layout_toRightOf="@+id/bottom_bar_3"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:drawableTop="@drawable/menu_log_4"
-            android:textColor="@drawable/menu_text"
-            android:layout_weight="1"
-            android:text="我"
-            android:textSize="16sp"/>
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/bottom_bar_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:drawableTop="@drawable/menu_log_4"
+                android:textColor="@drawable/menu_text"
+                android:text="我"
+                android:textSize="16sp"/>
+            <!--            小红点-->
+            <TextView
+                android:id="@+id/bottom_bar_4_notification"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/menu_notification"
+                android:gravity="center"
+                android:text="2"
+                android:textSize="15sp"
+                android:textColor="#fff"
+                android:layout_marginLeft="-45dp"
+                android:layout_toRightOf="@+id/bottom_bar_4"
+                />
+        </RelativeLayout>
     </LinearLayout>
+
+<!--    碎片，用于充当四个主页面的容器-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_bar"
-        android:id="@+id/ly_content">
+        android:id="@+id/weChat_Menu_content">
 
     </FrameLayout>
 </RelativeLayout>

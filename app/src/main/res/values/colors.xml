@@ -7,6 +7,8 @@
     <!--以上三种为系统自带基本主题色-->
     <color name="wechatlog">#07C160</color> <!-- 底部导航log选中颜色 -->
     <color name="wecharlog_defaut">#707070</color> <!-- 底部导航log默认未选中颜色 -->
+    <color name="bottom_bar_bg">#F7F7F7</color><!-- 底部状态栏背景色 -->
+
 
     <color name="white">#ffffff</color> <!-- 白色 -->
     <color name="ivory">#fffff0</color> <!-- 象牙色 -->
