@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.wechat.R;
 
+//碎片3
 public class Fragment3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

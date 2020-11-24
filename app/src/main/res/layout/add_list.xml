@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/add_list_logo1"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
             android:layout_weight="1"
@@ -119,13 +119,12 @@
 
         <ImageView
             android:id="@+id/add_list_logo5"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_add_5"
-            />
+            android:src="@drawable/ic_add_5" />
 
         <TextView
             android:id="@+id/add_list_text5"

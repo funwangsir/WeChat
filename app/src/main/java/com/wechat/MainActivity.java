@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,13 +18,20 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.wechat.db.MyDBOpenHelper;
+import com.wechat.db.SQLiteHelper;
+import com.wechat.entity.User;
 import com.wechat.fragments.Fragment1;
 import com.wechat.fragments.Fragment2;
 import com.wechat.fragments.Fragment3;
 import com.wechat.fragments.Fragment4;
+import com.wechat.otherlayout.Search;
+import com.wechat.tool.CheckObjectIsNullUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private SQLiteHelper sqLiteHelper;
 
     //底部导航栏的四个按钮
     private TextView bottom_bar_1;
@@ -50,17 +57,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView topTitle;//顶部的文字标题
     private ImageButton wechatAddButton;//顶部的添加按钮
 
+    private MyDBOpenHelper dbOpenHelper;//数据库操作类
+    private SQLiteDatabase db;
+
+    private ImageButton search;//顶部状态栏
+
+
+    private User user;//用户对象
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        user = new User();
+        sqLiteHelper = new SQLiteHelper(this);
+        //测试，打印数据库所有信息，便于调试
+        sqLiteHelper.showAllData();
 
-        initControl();
+        checkLoginIn();//启动应用确定检查是否登录
 
-        notificationStatus();
+        initControl();//加载绑定事件
+
+        notificationStatus();//底部状态栏的小红点
 
         replaceFragment(new Fragment1());//打开应用时加载第一个碎片
         bottom_bar_1.performClick();//打开应用时，模拟一次点击，选中第一个
+
+
     }
 
 
@@ -85,6 +108,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottom_bar_3.setOnClickListener(this);
         bottom_bar_4.setOnClickListener(this);
         wechatAddButton.setOnClickListener(this);
+
+
+        search = (ImageButton)findViewById(R.id.wechat_search1);
+        search.setOnClickListener(this);
     }
 
     //监听所有点击事件
@@ -106,6 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.wechat_add://顶部 添加好友
                 initPopWindow(view);//显示悬浮框
                 break;
+            case R.id.wechat_search1://顶部搜索
+                search(view);
             default:
                 break;
         }
@@ -177,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    //显示悬浮窗
     private void initPopWindow(View v) {
         View view = LayoutInflater.from(this).inflate(R.layout.add_list, null, false);
 
@@ -204,6 +234,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //设置popupWindow显示的位置，参数依次是参照View，x轴的偏移量，y轴的偏移量
         popWindow.showAsDropDown(v,-i+120, 40);
     }
+
+
+
+    //获取登录传递过来的userId
+    public String getUseridByLogin(){
+        //获取登录Acticity传递过来的userId
+        // 同时通过id查询其相关的信息，将其存储到user对象中
+        Intent getIntentUserId = getIntent();
+        return getIntentUserId.getStringExtra("userId");
+    }
+
+
+    //启动应用要检查是否有登录用户
+    public void checkLoginIn(){
+        if(CheckObjectIsNullUtils.objCheckIsNull(sqLiteHelper.selectLoginIn())){
+            Intent toLogin = new Intent(MainActivity.this,LoginActivity.class);
+            toLogin.putExtra("userId","");
+            startActivity(toLogin);
+        }else{
+            //加载聊天记录
+            user = sqLiteHelper.selectLoginIn();//返回user的信息
+        }
+    }
+
+    //搜索联系人、好友
+    public void search(View v){
+        Intent intent = new Intent(MainActivity.this, Search.class);
+        intent.putExtra("userId",user.getUserId());
+        startActivity(intent);
+    }
+    //通过UserId查询xx信息
+
+    //便于其它碎片共享User的数据
+    public User getUserInfo(){
+        return user;
+    }
+
 
 }
 
