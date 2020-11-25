@@ -98,8 +98,8 @@ public class RegisterActivity extends AppCompatActivity {
             user.setNickname(re_nickName.getText().toString());
             user.setAvatar("");
             user.setGender("男");
-            user.setArea("深圳");
-            user.setIntroduction("");
+            user.setArea("深圳-微信的老家");
+            user.setIntroduction("我是测试用户，要啥子个性嘛");
             user.setUserPhone(re_Phone.getText().toString());
             user.setLoginStatus("loginOut");
 

@@ -11,6 +11,7 @@
     <color name="bottom_bar_bg">#F7F7F7</color><!-- 底部状态栏背景色 -->
     <color name="top_bar_bg">#EDEDED</color><!-- 顶部状态栏背景色 -->
     <color name="wechat_sizecolor">#2BA246</color><!-- 字体主题颜色 -->
+    <color name="content_bg">#EDEDED</color><!--    主体背景色-->
 
 
     <color name="white">#ffffff</color> <!-- 白色 -->
