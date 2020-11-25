@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".otherlayout.Talk"
+    android:background="@color/top_bar_bg">
+
+    <!--    顶部状态栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/top_bar_bg"
+        >
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_back"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/back"
+            android:textColor="#000"
+            android:textSize="24sp"
+            android:text="测试用户"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_more"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <!--    聊天主体-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/send_msg_list"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/message_list"/>
+
+    <!--    底部聊天框-->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="#F7F7F7">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_send_voice"/>
+        <EditText
+            android:id="@+id/send_edit"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/send_msg_edit"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="7dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_send_face"/>
+        <ImageView
+            android:id="@+id/send_more"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_send_more"/>
+        <Button
+            android:visibility="gone"
+            android:id="@+id/send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/wechatlog"
+            android:text="发送"/>
+    </LinearLayout>
+</LinearLayout>

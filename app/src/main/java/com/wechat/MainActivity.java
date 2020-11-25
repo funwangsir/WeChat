@@ -31,8 +31,7 @@ import com.wechat.fragments.Fragment4;
 import com.wechat.otherlayout.Search;
 import com.wechat.tool.CheckObjectIsNullUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
