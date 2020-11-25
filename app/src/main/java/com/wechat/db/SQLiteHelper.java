@@ -8,7 +8,9 @@ import android.util.Log;
 
 import com.wechat.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 //数据库常用操作类
 public class SQLiteHelper {
@@ -62,7 +64,6 @@ public class SQLiteHelper {
         }
     }
 
-
     /**
      * 登录成功的用户，需要将loginStatus修改为LoginIn
      * @param userId 要修改状态的userId
@@ -73,7 +74,6 @@ public class SQLiteHelper {
         //修改条件为userId
         db.update("user",values,"userId=?",new String[]{userId});
     }
-
 
     /**
      * 推退出登录的用户，需要将loginStatus修改为LoginOut
@@ -86,7 +86,6 @@ public class SQLiteHelper {
         //修改条件为userId
         db.update("user",values,"userId=?",new String[]{userId});
     }
-
 
     /**
      * 用户注册
@@ -108,7 +107,6 @@ public class SQLiteHelper {
         db.insert("user",null,values);//插入数据库
     }
 
-
     /**
      *  查询数据库中状态为LoginIn的用户
      *  如果不存在已登录的用户，返回null
@@ -128,9 +126,15 @@ public class SQLiteHelper {
                 user.setName(cursor.getString(cursor.getColumnIndex("name")));
                 user.setNickname(cursor.getString(cursor.getColumnIndex("nickname")));
                 user.setUserPhone(cursor.getString(cursor.getColumnIndex("userPhone")));
-                //其他信息后面补上
+                user.setAvatar(cursor.getString(cursor.getColumnIndex("avatar")));
+                user.setGender(cursor.getString(cursor.getColumnIndex("gender")));
+                user.setArea(cursor.getString(cursor.getColumnIndex("area")));
+                user.setIntroduction(cursor.getString(cursor.getColumnIndex("introduction")));
+                user.setUserPhone(cursor.getString(cursor.getColumnIndex("userPhone")));
+                user.setLoginStatus(cursor.getString(cursor.getColumnIndex("loginStatus")));
             }
         }
+
         return user;
     }
 
@@ -173,49 +177,105 @@ public class SQLiteHelper {
     public User getUserInfoByuserIdOrPhone(String useridOrphoe){
         user = new User();
 
-        Cursor cursorUser = db.query("user",
+        Cursor cursor = db.query("user",
                 null,
-                "userId=?",
-                new String[]{useridOrphoe},null,null,null);
-        Cursor cursorPhone = db.query("user",
-                null,
-                "userPhone=?",
-                new String[]{useridOrphoe},null,null,null);
+                "userId=? or userPhone=?",
+                new String[]{useridOrphoe,useridOrphoe},null,null,null);
 
-        if(cursorUser.getCount() != 0){
-            if(cursorUser.moveToFirst()){
-                user.setUserId( cursorUser.getString(cursorUser.getColumnIndex("userId")));
-                user.setPassword(cursorUser.getString(cursorUser.getColumnIndex("password")));
-                user.setName(cursorUser.getString(cursorUser.getColumnIndex("name")));
-                user.setNickname(cursorUser.getString(cursorUser.getColumnIndex("nickname")));
-                user.setAvatar(cursorUser.getString(cursorUser.getColumnIndex("avatar")));
-                user.setGender(cursorUser.getString(cursorUser.getColumnIndex("gender")));
-                user.setArea(cursorUser.getString(cursorUser.getColumnIndex("area")));
-                user.setIntroduction(cursorUser.getString(cursorUser.getColumnIndex("introduction")));
-                user.setUserPhone(cursorUser.getString(cursorUser.getColumnIndex("userPhone")));
-                user.setLoginStatus(cursorUser.getString(cursorUser.getColumnIndex("loginStatus")));
-            }
-        }else if(cursorPhone.getCount() != 0){
-            if(cursorPhone.moveToFirst()){
-                user.setUserId( cursorPhone.getString(cursorPhone.getColumnIndex("userId")));
-                user.setPassword(cursorPhone.getString(cursorPhone.getColumnIndex("password")));
-                user.setName(cursorPhone.getString(cursorPhone.getColumnIndex("name")));
-                user.setNickname(cursorPhone.getString(cursorPhone.getColumnIndex("nickname")));
-                user.setAvatar(cursorPhone.getString(cursorPhone.getColumnIndex("avatar")));
-                user.setGender(cursorPhone.getString(cursorPhone.getColumnIndex("gender")));
-                user.setArea(cursorPhone.getString(cursorPhone.getColumnIndex("area")));
-                user.setIntroduction(cursorPhone.getString(cursorPhone.getColumnIndex("introduction")));
-                user.setUserPhone(cursorPhone.getString(cursorPhone.getColumnIndex("userPhone")));
-                user.setLoginStatus(cursorPhone.getString(cursorPhone.getColumnIndex("loginStatus")));
+        if(cursor.getCount() != 0){
+            if(cursor.moveToFirst()){
+                user.setUserId( cursor.getString(cursor.getColumnIndex("userId")));
+                user.setPassword(cursor.getString(cursor.getColumnIndex("password")));
+                user.setName(cursor.getString(cursor.getColumnIndex("name")));
+                user.setNickname(cursor.getString(cursor.getColumnIndex("nickname")));
+                user.setAvatar(cursor.getString(cursor.getColumnIndex("avatar")));
+                user.setGender(cursor.getString(cursor.getColumnIndex("gender")));
+                user.setArea(cursor.getString(cursor.getColumnIndex("area")));
+                user.setIntroduction(cursor.getString(cursor.getColumnIndex("introduction")));
+                user.setUserPhone(cursor.getString(cursor.getColumnIndex("userPhone")));
+                user.setLoginStatus(cursor.getString(cursor.getColumnIndex("loginStatus")));
             }
         }
 
         return user;
     }
 
+    /**
+     * 添加好友
+     * @param userId 发起添加的用户
+     * @param friendId  要添加的用户id
+     */
+    public void addFriend(String userId,String friendId){
+        ContentValues values = new ContentValues();
+        values.put("userId",userId);
+        values.put("userFriendId",friendId);
+        db.insert("friends",null,values);//插入数据库
+    }
+
+    /**
+     * 验证用户是否为当前登录用户的好友
+     * @param userId
+     * @param friendId
+     * @return
+     */
+    public boolean isFriend(String userId,String friendId){
+        Cursor cursor = db.query("friends",
+                null,
+                "userId=? and userFriendId=?",
+                new String[]{userId,friendId},null,null,null);
+        if(cursor.getCount() == 0)
+            return false;
+        else
+            return true;
+    }
+
+
+    /**
+     * 查询当前用户的好友列表信息
+     * @param userid
+     * @return
+     */
+    public List<User> selectFriends(String userid){
+
+        List<User> uFriendList = new ArrayList<>();
+        User uFriend;//要在循环内部实例化
+        //从friends表中查询到好友的id信息
+        Cursor cursorFriend = db.query("friends",
+                new String[]{"userFriendId"},
+                "userId=?",
+                new String[]{userid},null,null,null);
+
+
+        if(cursorFriend.moveToFirst()){
+                do{//遍历获取好友列表信息，并添加到集合中
+                    String[] param = new String[]{cursorFriend.getString(cursorFriend.getColumnIndex("userFriendId"))} ;
+                    Cursor cursorUserInfoList = db.query("user",
+                            null,
+                            "userId=?",param,null,null,null);
+
+                    if(cursorUserInfoList.moveToFirst()){
+                        uFriend = new User();
+                        uFriend.setUserId(cursorUserInfoList.getString(cursorUserInfoList.getColumnIndex("userId")));
+                        uFriend.setName(cursorUserInfoList.getString(cursorUserInfoList.getColumnIndex("name")));
+                        uFriend.setNickname(cursorUserInfoList.getString(cursorUserInfoList.getColumnIndex("nickname")));
+                        uFriend.setAvatar(cursorUserInfoList.getString(cursorUserInfoList.getColumnIndex("avatar")));
+                        uFriend.setGender(cursorUserInfoList.getString(cursorUserInfoList.getColumnIndex("gender")));
+                        uFriend.setArea(cursorUserInfoList.getString(cursorUserInfoList.getColumnIndex("area")));
+                        uFriend.setIntroduction(cursorUserInfoList.getString(cursorUserInfoList.getColumnIndex("introduction")));
+                        uFriend.setUserPhone(cursorUserInfoList.getString(cursorUserInfoList.getColumnIndex("userPhone")));
+                        uFriendList.add(uFriend);
+                    }
+                }while (cursorFriend.moveToNext());
+        }
+        return uFriendList;
+    }
+
+
     //测试打印数据库所有数据，便于调试
     public void showAllData(){
         Cursor user = db.query("user",null,null,null,null,null,null);
+        Cursor friend = db.query("friends",null,null,null,null,null,null);
+
         if(user.moveToFirst()){
             do{
                 Log.e("user表", "userId="+user.getString(user.getColumnIndex("userId")));
@@ -231,5 +291,17 @@ public class SQLiteHelper {
                 Log.e("user表", "------------------------");
             }while (user.moveToNext());
         }
+
+        if(friend.moveToFirst()){
+            do{
+                Log.e("friends表", "id="+friend.getString(friend.getColumnIndex("id")));
+                Log.e("friends表", "userId="+friend.getString(friend.getColumnIndex("userId")));
+                Log.e("friends表", "userFriendId="+friend.getString(friend.getColumnIndex("userFriendId")));
+                Log.e("friends表", "------------------------");
+            }while (friend.moveToNext());
+        }
+
+
+
     }
 }

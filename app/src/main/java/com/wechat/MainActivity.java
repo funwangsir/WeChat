@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.wechat.db.MyDBOpenHelper;
 import com.wechat.db.SQLiteHelper;
+import com.wechat.entity.Friends;
 import com.wechat.entity.User;
 import com.wechat.fragments.Fragment1;
 import com.wechat.fragments.Fragment2;
@@ -28,6 +30,9 @@ import com.wechat.fragments.Fragment3;
 import com.wechat.fragments.Fragment4;
 import com.wechat.otherlayout.Search;
 import com.wechat.tool.CheckObjectIsNullUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,10 +74,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         user = new User();
         sqLiteHelper = new SQLiteHelper(this);
-        //测试，打印数据库所有信息，便于调试
-        sqLiteHelper.showAllData();
+
+        sqLiteHelper.showAllData(); //测试，打印数据库所有信息，便于调试
 
         checkLoginIn();//启动应用确定检查是否登录
 
@@ -205,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         topBar.setVisibility(View.INVISIBLE); //我的页面不显示顶部状态栏
     }
 
-
     //显示悬浮窗
     private void initPopWindow(View v) {
         View view = LayoutInflater.from(this).inflate(R.layout.add_list, null, false);
@@ -236,14 +241,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
-    //获取登录传递过来的userId
-    public String getUseridByLogin(){
-        //获取登录Acticity传递过来的userId
-        // 同时通过id查询其相关的信息，将其存储到user对象中
-        Intent getIntentUserId = getIntent();
-        return getIntentUserId.getStringExtra("userId");
-    }
 
 
     //启动应用要检查是否有登录用户
