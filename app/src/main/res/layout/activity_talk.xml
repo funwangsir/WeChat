@@ -99,8 +99,9 @@
         <Button
             android:visibility="gone"
             android:id="@+id/send_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
             android:layout_gravity="center_vertical"
             android:background="@color/wechatlog"
             android:text="发送"/>

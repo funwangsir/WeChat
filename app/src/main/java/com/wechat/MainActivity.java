@@ -1,11 +1,15 @@
 package com.wechat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wechat.db.MyDBOpenHelper;
 import com.wechat.db.SQLiteHelper;
@@ -75,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         user = new User();
+        //第一次访问数据库会进行读写操作，需要申请运行时权限
+
+//        getpermission();//获取权限，没有正常获取就退出程序
+
         sqLiteHelper = new SQLiteHelper(this);
 
         sqLiteHelper.showAllData(); //测试，打印数据库所有信息，便于调试
@@ -135,11 +144,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bottom_bar_4://我
                 bottomBar4();
                 break;
-            case R.id.wechat_add://顶部 添加好友
+            case R.id.wechat_add://顶部悬浮框
                 initPopWindow(view);//显示悬浮框
                 break;
             case R.id.wechat_search1://顶部搜索
-                search(view);
+                search();
             default:
                 break;
         }
@@ -212,7 +221,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //显示悬浮窗
     private void initPopWindow(View v) {
-        View view = LayoutInflater.from(this).inflate(R.layout.add_list, null, false);
+        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.add_list, null, false);
+        RelativeLayout addFreind = (RelativeLayout)view.findViewById(R.id.add_list_text2);
 
         //1.构造一个PopupWindow，参数依次是加载的View，宽高
         final PopupWindow popWindow = new PopupWindow(view,
@@ -235,11 +245,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         popWindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED);
         int i = popWindow.getContentView().getMeasuredWidth();
-        //设置popupWindow显示的位置，参数依次是参照View，x轴的偏移量，y轴的偏移量
+//        设置popupWindow显示的位置，参数依次是参照View，x轴的偏移量，y轴的偏移量
         popWindow.showAsDropDown(v,-i+120, 40);
+
+
+        addFreind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popWindow.dismiss();//隐藏
+                search();
+            }
+        });
+
     }
-
-
 
 
     //启动应用要检查是否有登录用户
@@ -255,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //搜索联系人、好友
-    public void search(View v){
+    public void search(){
         Intent intent = new Intent(MainActivity.this, Search.class);
         intent.putExtra("userId",user.getUserId());
         startActivity(intent);
@@ -266,7 +284,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public User getUserInfo(){
         return user;
     }
-
 
 }
 

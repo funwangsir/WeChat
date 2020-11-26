@@ -305,6 +305,32 @@ public class SQLiteHelper {
     }
 
     /**
+     * 通过双方用户id查询聊天记录，获取最新的记录对象
+     * @param sendUserId
+     * @param receiveUserId
+     * @return
+     */
+    public Message selectNewMessage(String sendUserId,String receiveUserId){
+        Message message = new Message();
+        //查询双方的聊天记录
+        Cursor cursor = db.query("message",
+                null,
+                "(sendUserId=? and receiveUserId=?) or (sendUserId=? and receiveUserId=?)",
+                new String[]{sendUserId,receiveUserId,receiveUserId,sendUserId},
+                null,null,"createTime desc","0,1");//按时间降序，然后读取第一条
+
+        if(cursor.moveToFirst()){
+            message.setId( Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+            message.setSendUserId(cursor.getString(cursor.getColumnIndex("sendUserId")));
+            message.setReceiveUserId(cursor.getString(cursor.getColumnIndex("receiveUserId")));
+            message.setTextMessage(cursor.getString(cursor.getColumnIndex("textMessage")));
+            message.setImageMessage(cursor.getString(cursor.getColumnIndex("imageMessage")));
+            message.setCreateTime(cursor.getString(cursor.getColumnIndex("createTime")));
+        }
+        return message;
+    }
+
+    /**
      * 发送消息 传入要发送的消息实体对象
      * @param message
      */
@@ -325,8 +351,8 @@ public class SQLiteHelper {
     //测试打印数据库所有数据，便于调试
     public void showAllData(){
         Cursor user = db.query("user",null,null,null,null,null,null);
-//        Cursor friend = db.query("friends",null,null,null,null,null,null);
-//        Cursor message = db.query("message",null,null,null,null,null,null);
+        Cursor friend = db.query("friends",null,null,null,null,null,null);
+        Cursor message = db.query("message",null,null,null,null,null,null);
         if(user.moveToFirst()){
             do{
                 Log.e("user表", "userId="+user.getString(user.getColumnIndex("userId")));
