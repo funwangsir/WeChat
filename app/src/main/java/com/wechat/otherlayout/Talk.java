@@ -58,12 +58,9 @@ public class Talk extends AppCompatActivity {
 
         backActivity();//返回上一个Activity
 
-
-
         changeSendButton();//发送消息的按钮的显示与隐藏
 
         loadMessageList();//实时加载聊天记录
-
 
         sendMessage();//点击发送按钮发送消息
     }
@@ -77,6 +74,7 @@ public class Talk extends AppCompatActivity {
 
 
 
+        //获取传递过来的User对象
         User receiveUser = (User)getIntent().getSerializableExtra("receiveUser");
         receiveMsgName.setText(receiveUser.getName());
         sendUserId = sqLiteHelper.selectLoginIn().getUserId();//当前登录用户id

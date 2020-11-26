@@ -3,20 +3,20 @@ package com.wechat.adapter;
 import com.wechat.entity.Message;
 
 public class MessageList {
-    private int imageId;
+    private int imgId;
     private Message message;
 
-    public MessageList(int imageId, Message message) {
-        this.imageId = imageId;
+    public MessageList(int imgId, Message message) {
+        this.imgId = imgId;
         this.message = message;
     }
 
-    public int getImageId() {
-        return imageId;
+    public int getImgId() {
+        return imgId;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setImgId(int imgId) {
+        this.imgId = imgId;
     }
 
     public Message getMessage() {

@@ -90,11 +90,4 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     public int getItemCount() {
         return mFriendList.size();
     }
-
-
-
-
-
-
-
 }
