@@ -5,9 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<Button
-    android:id="@+id/talg_test"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="聊天"/>
 </LinearLayout>

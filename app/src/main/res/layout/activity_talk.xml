@@ -25,6 +25,7 @@
             />
 
         <TextView
+            android:id="@+id/receive_msg_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -43,21 +44,24 @@
     </RelativeLayout>
 
     <!--    聊天主体-->
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/send_msg_list"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"/>-->
-
-    <include
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/message_list"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/send_msg_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+<!--    <include-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        layout="@layout/message_list"/>-->
 
     <!--    底部聊天框-->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"

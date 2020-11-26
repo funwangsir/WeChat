@@ -27,14 +27,6 @@ public class Fragment1 extends Fragment {
         mainActivity = (MainActivity)getActivity();//获取指定活动对象
 
 
-        Button b = (Button)view.findViewById(R.id.talg_test);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mainActivity, Talk.class);
-                startActivity(intent);
-            }
-        });
         return view;
     }
 }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.wechat.entity.Message;
 import com.wechat.entity.User;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class SQLiteHelper {
     private MyDBOpenHelper dbOpenHelper;
     private SQLiteDatabase db;
 
-    private User user;
+
 
     public SQLiteHelper(Context context) {
         dbOpenHelper  = new MyDBOpenHelper(context,"myWechat.db",null,1);
@@ -144,7 +145,7 @@ public class SQLiteHelper {
      * @return
      */
     public User getUserInfo(String userid){
-        user = new User();
+        User user = new User();
 
         //从数据库查询出其他信息并存储到User对象中
         Cursor cursor = db.query("user",
@@ -175,7 +176,7 @@ public class SQLiteHelper {
      * @return
      */
     public User getUserInfoByuserIdOrPhone(String useridOrphoe){
-        user = new User();
+       User user = new User();
 
         Cursor cursor = db.query("user",
                 null,
@@ -271,11 +272,61 @@ public class SQLiteHelper {
     }
 
 
+    /**
+     * 通过双方用户id查询聊天记录，按时间顺序排依次返回
+     * @param sendUserId
+     * @param receiveUserId
+     * @return
+     */
+    public List<Message> selectMessage(String sendUserId,String receiveUserId){
+        List<Message> list = new ArrayList<>();
+        Message message;
+        //查询双方的聊天记录
+        Cursor cursor = db.query("message",
+                null,
+                "(sendUserId=? and receiveUserId=?) or (sendUserId=? and receiveUserId=?)",
+                new String[]{sendUserId,receiveUserId,receiveUserId,sendUserId},
+                null,null,"createTime asc");//按时间升序
+
+        if(cursor.moveToFirst()){
+            do{
+                message = new Message();
+                message.setId( Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+                message.setSendUserId(cursor.getString(cursor.getColumnIndex("sendUserId")));
+                message.setReceiveUserId(cursor.getString(cursor.getColumnIndex("receiveUserId")));
+                message.setTextMessage(cursor.getString(cursor.getColumnIndex("textMessage")));
+                message.setImageMessage(cursor.getString(cursor.getColumnIndex("imageMessage")));
+                message.setCreateTime(cursor.getString(cursor.getColumnIndex("createTime")));
+                list.add(message);
+            }while (cursor.moveToNext());
+
+        }
+        return list;
+    }
+
+    /**
+     * 发送消息 传入要发送的消息实体对象
+     * @param message
+     */
+    public void sendMessage(Message message){
+        ContentValues values = new ContentValues();
+        values.put("sendUserId",message.getSendUserId());
+        values.put("receiveUserId",message.getReceiveUserId());
+        values.put("textMessage",message.getTextMessage());
+        values.put("imageMessage",message.getImageMessage());
+        values.put("createTime",message.getCreateTime());
+        db.insert("message",null,values);
+    }
+
+
+
+
+
     //测试打印数据库所有数据，便于调试
     public void showAllData(){
         Cursor user = db.query("user",null,null,null,null,null,null);
-        Cursor friend = db.query("friends",null,null,null,null,null,null);
-
+//        Cursor friend = db.query("friends",null,null,null,null,null,null);
+//        Cursor message = db.query("message",null,null,null,null,null,null);
         if(user.moveToFirst()){
             do{
                 Log.e("user表", "userId="+user.getString(user.getColumnIndex("userId")));
@@ -292,15 +343,26 @@ public class SQLiteHelper {
             }while (user.moveToNext());
         }
 
-        if(friend.moveToFirst()){
-            do{
-                Log.e("friends表", "id="+friend.getString(friend.getColumnIndex("id")));
-                Log.e("friends表", "userId="+friend.getString(friend.getColumnIndex("userId")));
-                Log.e("friends表", "userFriendId="+friend.getString(friend.getColumnIndex("userFriendId")));
-                Log.e("friends表", "------------------------");
-            }while (friend.moveToNext());
-        }
+//        if(friend.moveToFirst()){
+//            do{
+//                Log.e("friends表", "id="+friend.getString(friend.getColumnIndex("id")));
+//                Log.e("friends表", "userId="+friend.getString(friend.getColumnIndex("userId")));
+//                Log.e("friends表", "userFriendId="+friend.getString(friend.getColumnIndex("userFriendId")));
+//                Log.e("friends表", "------------------------");
+//            }while (friend.moveToNext());
+//        }
 
+//        if(message.moveToFirst()){
+//            do{
+//                Log.e("message表", "id="+message.getString(message.getColumnIndex("id")));
+//                Log.e("message表", "sendUserId="+message.getString(message.getColumnIndex("sendUserId")));
+//                Log.e("message表", "receiveUserId="+message.getString(message.getColumnIndex("receiveUserId")));
+//                Log.e("message表", "textMessage="+message.getString(message.getColumnIndex("textMessage")));
+//                Log.e("message表", "imageMessage="+message.getString(message.getColumnIndex("imageMessage")));
+//                Log.e("message表", "createTime="+message.getString(message.getColumnIndex("createTime")));
+//                Log.e("message表", "------------------------");
+//            }while (message.moveToNext());
+//        }
 
 
     }
