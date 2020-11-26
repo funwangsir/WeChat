@@ -12,7 +12,7 @@
     <color name="top_bar_bg">#EDEDED</color><!-- 顶部状态栏背景色 -->
     <color name="wechat_sizecolor">#2BA246</color><!-- 字体主题颜色 -->
     <color name="content_bg">#EDEDED</color><!--    主体背景色-->
-
+    <color name="talk_me_bg">#95EC69</color><!--    聊天-自己的气泡背景色-->
 
     <color name="white">#ffffff</color> <!-- 白色 -->
     <color name="ivory">#fffff0</color> <!-- 象牙色 -->

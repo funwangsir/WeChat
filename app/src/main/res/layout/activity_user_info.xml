@@ -33,7 +33,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:background="#fff"
         android:orientation="horizontal">
         <ImageView
@@ -45,19 +45,35 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="15dp">
             <TextView
-                android:id="@+id/user_info_nickName"
+                android:id="@+id/user_info_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#000000"
                 android:text="xxx"
                 android:textSize="32sp"/>
+            <TextView
+                android:id="@+id/user_info_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="昵称：xxx"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/user_info_userid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="微信号：xxx"
+                android:textSize="16sp"/>
             <TextView
                 android:id="@+id/user_info_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="地区：xxx"
                 android:textSize="16sp"/>
         </LinearLayout>
@@ -142,7 +158,7 @@
         android:layout_marginTop="15dp"
         android:background="#fff">
         <TextView
-            android:id="@+id/user_search_option"
+            android:id="@+id/user_options"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"

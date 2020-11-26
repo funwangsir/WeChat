@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/top_bar_bg"
+    android:id="@+id/talk_content">
+
+    <!--    发送消息方-->
+    <RelativeLayout
+        android:id="@+id/send_msg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        >
+        <TextView
+            android:id="@+id/send_msg_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="400dp"
+            android:padding="15dp"
+            android:textSize="20sp"
+            android:layout_toLeftOf="@+id/send_msg_head_img"
+            android:background="@drawable/talk_bg_right"
+            android:text="干啥"/>
+        <ImageView
+            android:id="@+id/send_msg_head_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/ic_default_img"/>
+    </RelativeLayout>
+
+    <!--    接收消息方-->
+    <RelativeLayout
+        android:id="@+id/receive_msg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        >
+        <ImageView
+            android:id="@+id/receive_msg_head_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/ic_default_img"/>
+        <TextView
+            android:id="@+id/receive_msg_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="400dp"
+            android:textSize="20sp"
+            android:padding="15dp"
+            android:layout_toRightOf="@+id/receive_msg_head_img"
+            android:background="@drawable/talk_bg_left"
+            android:text="如果上帝造物只赋予残缺灵魂，那找到遗失部分就是使命终身。幸运的是，我好像只是一抬头，就看见星空全入你的眼眸，魂灵忽然完满，又足够温柔。"/>
+        />
+    </RelativeLayout>
+
+
+</LinearLayout>

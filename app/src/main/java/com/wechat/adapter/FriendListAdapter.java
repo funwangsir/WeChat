@@ -60,7 +60,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                 Intent intent = new Intent(context, UserInfo.class);
                 intent.putExtra("userInfo",user);
                 context.startActivity(intent);
-                //Toast.makeText(v.getContext(),"点击了："+f.getUser().getName()+f.getUser().getUserId(),Toast.LENGTH_LONG).show();
             }
         });
         viewHolder.headImg.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +74,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                 intent.putExtra("userInfo",user);
                 context.startActivity(intent);
 
-               // Toast.makeText(v.getContext(),"点击了头像："+f.getUser().getName()+f.getUser().getUserId(),Toast.LENGTH_LONG).show();
             }
         });
         return viewHolder;
