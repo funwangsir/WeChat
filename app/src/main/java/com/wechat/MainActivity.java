@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clearSelected();
         bottom_bar_4.setSelected(true);
         replaceFragment(fg4);
-        topBar.setVisibility(View.INVISIBLE); //我的页面不显示顶部状态栏
+        topBar.setVisibility(View.GONE); //我的页面不显示顶部状态栏
     }
 
     //显示悬浮窗
