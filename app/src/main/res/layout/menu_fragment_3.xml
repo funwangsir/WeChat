@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/goto_moments"
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_list_high"
         android:background="#FFFFFF">

@@ -68,7 +68,7 @@ public class Moments {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Moments{");
+        final StringBuilder sb = new StringBuilder("SendMoments{");
         sb.append("id=").append(id);
         sb.append(", userId='").append(userId).append('\'');
         sb.append(", textContent='").append(textContent).append('\'');

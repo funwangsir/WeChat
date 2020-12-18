@@ -23,8 +23,8 @@ import java.util.List;
 //碎片2
 public class Fragment2 extends Fragment {
     private MainActivity mainActivity;
-    User user;
-    SQLiteHelper sqLiteHelper;
+    private User user;
+    private SQLiteHelper sqLiteHelper;
     List<FriendList> friendLists;//存储好友信息的列表
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

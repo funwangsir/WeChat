@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:text="xxx"
-                android:textSize="32sp"/>
+                android:textSize="@dimen/default_title_size"/>
             <TextView
                 android:id="@+id/user_info_nickname"
                 android:layout_width="match_parent"
@@ -81,7 +81,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/default_list_high"
         android:layout_marginTop="1dp"
         android:background="#fff">
         <TextView
@@ -91,7 +91,7 @@
             android:text="设置备注和标签"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:textSize="24sp"
+            android:textSize="@dimen/default_font_size"
             android:textColor="#171717"/>
 
         <ImageView
@@ -105,7 +105,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="@dimen/default_list_high"
         android:background="#fff"
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
@@ -113,48 +113,49 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:orientation="horizontal"
             android:text="个性签名"
-            android:textSize="24sp"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/default_font_size"
             android:textColor="#171717"/>
         <TextView
             android:id="@+id/user_info_introduction"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textSize="@dimen/default_font_size"
             android:text="xxx"/>
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="#fff"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:orientation="horizontal"
-            android:text="来源"
-            android:textSize="24sp"
-            android:textColor="#171717"/>
+        android:layout_height="@dimen/default_list_high"
+        android:layout_marginTop="1dp"
+        android:background="#fff">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="24sp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text="来自微信搜索"/>
+            android:text="朋友圈"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/default_font_size"
+            android:textColor="#171717"/>
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_next"
+            android:padding="15dp"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/add_friend"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="@dimen/default_list_high"
         android:layout_marginTop="15dp"
         android:background="#fff">
         <TextView
@@ -163,7 +164,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="#586B95"
-            android:textSize="24dp"
+            android:textSize="@dimen/default_font_size"
             android:text="添加到通讯录"/>
     </LinearLayout>
 </LinearLayout>
