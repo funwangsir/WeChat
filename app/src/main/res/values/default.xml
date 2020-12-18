@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    各功能列表的默认字体大小-->
+    <dimen name="default_font_size">18sp</dimen>
+
+    <!--    各功能列表的默认行高 - 白色部分的高度-->
+    <dimen name="default_list_high">70dp</dimen>
+
+    <!--    顶部标题字体大小-->
+    <dimen name="default_title_size">24sp</dimen>
+</resources>

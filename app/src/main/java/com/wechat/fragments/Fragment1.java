@@ -68,8 +68,5 @@ public class Fragment1 extends Fragment {
             //图片用默认的、名字就是当前朋友的名字、消息就是查询出来的消息
             talkLists.add(new TalkList(R.drawable.ic_default_img,f,message.getTextMessage()));
         }
-
-
-
     }
 }

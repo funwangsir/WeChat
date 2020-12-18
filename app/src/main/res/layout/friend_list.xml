@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:background="#fff"
     android:layout_marginTop="0.5dp"
-    android:layout_height="70dp">
+    android:layout_height="@dimen/default_list_high">
     <ImageView
         android:id="@+id/head_img"
         android:layout_width="41dp"
@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:layout_marginLeft="15dp"
-        android:textSize="22sp"
+        android:textSize="@dimen/default_font_size"
         android:textColor="#191919"
         android:text="朋友列表"
         />

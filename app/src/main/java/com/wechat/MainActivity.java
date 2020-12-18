@@ -80,9 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         user = new User();
-        //第一次访问数据库会进行读写操作，需要申请运行时权限
-
-//        getpermission();//获取权限，没有正常获取就退出程序
 
         sqLiteHelper = new SQLiteHelper(this);
 
