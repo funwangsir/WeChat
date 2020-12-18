@@ -6,22 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.wechat.LoginActivity;
 import com.wechat.MainActivity;
 import com.wechat.R;
 import com.wechat.db.SQLiteHelper;
 import com.wechat.entity.User;
+import com.wechat.otherlayout.Setting;
 
 //碎片4
 public class Fragment4 extends Fragment {
 
     private SQLiteHelper sqLiteHelper;
 
-    private TextView accountInfo;//账号信息
+
 
     private Button loginOut;
 
@@ -37,28 +38,24 @@ public class Fragment4 extends Fragment {
 
         sqLiteHelper = new SQLiteHelper(mainActivity);
 
+        users = mainActivity.getUserInfo();//获取当前登录的用户信息
 
         //显示当前登录的userid以及其他信息
-//        accountInfo = (TextView)view.findViewById(R.id.account_info);
-//        users = mainActivity.getUserInfo();
-//        accountInfo.setText(users.getUserId()+","+users.getName()+","+users.getNickname());
+        TextView nickname = (TextView)view.findViewById(R.id.fragment4_user_info_nickname);
+        TextView userid = (TextView)view.findViewById(R.id.fragment4_user_info_userid);
+        nickname.setText(users.getNickname());
+        userid.setText(users.getUserId());
+
+        RelativeLayout setting = (RelativeLayout)view.findViewById(R.id.fragment4_setting);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent setting = new Intent(mainActivity, Setting.class);
+                startActivity(setting);
+            }
+        });
 
 
-        //退出登录
-//        loginOut = (Button)view.findViewById(R.id.login_out);
-//        loginOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent toLoginout = new Intent(mainActivity, LoginActivity.class);
-//
-//                //修改登录状态
-//                sqLiteHelper.userLoginOut(users.getUserId());
-//
-//                //退出登录，要将当前的useriId传递过去，便于在登录框显示用户id
-//                toLoginout.putExtra("userId",users.getUserId());
-//                startActivity(toLoginout);
-//            }
-//        });
         return view;
     }
 }

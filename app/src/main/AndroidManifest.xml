@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".otherlayout.Moments"></activity>
+        <activity android:name=".otherlayout.Setting"></activity>
+        <activity android:name=".otherlayout.Moments" />
         <activity android:name=".otherlayout.Talk" />
         <activity android:name=".otherlayout.UserInfo" />
         <activity android:name=".otherlayout.Search" />

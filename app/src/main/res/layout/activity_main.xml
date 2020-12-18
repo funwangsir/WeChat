@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="微信"
-            android:textSize="24sp"
+            android:textSize="@dimen/default_title_size"
             android:textColor="#171717"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
