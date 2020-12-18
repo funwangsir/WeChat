@@ -20,3 +20,12 @@ Android中使用**svg**图片的方式
 2.选中drawable目录，右键->New->Vector Asset,然后Asset Type选择第二个Local file，Name自己取，Path选择图片svg的路径，然后点Next，下一步不用管直接Finish  
 3.这样就在drawable目录下创建了svg图片的xml格式，在界面布局文件中直接使用 android:background="@drawable/xxx.xml"就可以了  
 
+
+##### 3.统一更改zz主要的字体大小
+由于不同手机型号，导致每个手机上字体可能大小需求不一样。  
+在value/default.xml中我配置了一部分字体大小，如果要更改，直接更改其中对应的参数即可  
+比如:  
+功能列表中，每行的高度  
+功能列表中，每行字体的大小  
+每个界面的标题字体大小  
+后续可以自行添加  
