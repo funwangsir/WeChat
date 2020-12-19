@@ -7,9 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.wechat.entity.Message;
+import com.wechat.entity.Moments;
 import com.wechat.entity.User;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -344,15 +347,64 @@ public class SQLiteHelper {
         db.insert("message",null,values);
     }
 
+    /**
+     * 发送朋友圈
+     */
+    public void publishMoments(Moments moments){
+        ContentValues values = new ContentValues();
+        values.put("userId",moments.getUserId());
+        values.put("textContent",moments.getTextContent());
+        values.put("imageContent",moments.getImageContent());
+        values.put("publishTime",moments.getPublishTime());
+        values.put("likeNum",moments.getLikeNum());
+        values.put("likeUserId",moments.getLikeUserId());
+        db.insert("moments",null,values);
+    }
 
+    /**
+     * 通过当前登录的用户id查询该用户和他好友的朋友圈信息
+     * @param user
+     */
+    public List<Moments> getMoments(User user){
+        List<Moments> res = new ArrayList<>();
+        //查询出当前用户的所有好友列表
+        List<User> friends = selectFriends(user.getUserId());
+        friends.add(user);//把自己也加进去
 
+        for (User u: friends) {
+            Moments oneMoment;//用于保存每一条朋友圈
+            //一个朋友可能有多条朋友圈
+            Cursor moment = db.query("moments",
+                    null,//查询所有行
+                    "userId=?",//条件
+                    new String[]{u.getUserId()},null,null,null);
 
+            if(moment.moveToFirst()) {
+                do {
+                    oneMoment = new Moments();
+                    oneMoment.setId(Integer.parseInt(moment.getString(moment.getColumnIndex("id"))));
+                    oneMoment.setUserId(moment.getString(moment.getColumnIndex("userId")));
+                    oneMoment.setTextContent(moment.getString(moment.getColumnIndex("textContent")));
+                    oneMoment.setImageContent(moment.getString(moment.getColumnIndex("imageContent")));
+                    oneMoment.setPublishTime(moment.getString(moment.getColumnIndex("publishTime")));
+                    oneMoment.setLikeNum(Integer.parseInt(moment.getString(moment.getColumnIndex("likeNum"))));
+                    oneMoment.setLikeUserId(moment.getString(moment.getColumnIndex("likeUserId")));
+                    res.add(oneMoment);
+                } while (moment.moveToNext());
+            }
+        }
+
+        Collections.sort(res);//通过puhlishTime字段对集合元素进行排序
+        return res;
+    }
 
     //测试打印数据库所有数据，便于调试
     public void showAllData(){
         Cursor user = db.query("user",null,null,null,null,null,null);
-        Cursor friend = db.query("friends",null,null,null,null,null,null);
-        Cursor message = db.query("message",null,null,null,null,null,null);
+//        Cursor friend = db.query("friends",null,null,null,null,null,null);
+//        Cursor message = db.query("message",null,null,null,null,null,null);
+        //db.delete("moments",null,null);//清空表
+        Cursor moments = db.query("moments",null,null,null,null,null,null);
         if(user.moveToFirst()){
             do{
                 Log.e("user表", "userId="+user.getString(user.getColumnIndex("userId")));
@@ -389,7 +441,16 @@ public class SQLiteHelper {
 //                Log.e("message表", "------------------------");
 //            }while (message.moveToNext());
 //        }
-
-
+        if(moments.moveToFirst()){
+            do{
+                Log.e("moments表", "userId="+moments.getString(moments.getColumnIndex("userId")));
+                Log.e("moments表", "textContent="+moments.getString(moments.getColumnIndex("textContent")));
+                Log.e("moments表", "imageContent="+moments.getString(moments.getColumnIndex("imageContent")));
+                Log.e("moments表", "publishTime="+moments.getString(moments.getColumnIndex("publishTime")));
+                Log.e("moments表", "likeNum="+moments.getString(moments.getColumnIndex("likeNum")));
+                Log.e("moments表", "likeUserId="+moments.getString(moments.getColumnIndex("likeUserId")));
+                Log.e("moments表", "------------------------");
+            }while (moments.moveToNext());
+        }
     }
 }

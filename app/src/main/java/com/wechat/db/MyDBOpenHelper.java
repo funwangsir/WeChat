@@ -20,6 +20,7 @@ public class MyDBOpenHelper extends SQLiteOpenHelper {
     //数据库第一次创建时被调用
     public void onCreate(SQLiteDatabase db) {
         //建表
+        //用户信息表
         db.execSQL("CREATE TABLE IF NOT EXISTS user (" +
                 "  userId text(16) PRIMARY KEY NOT NULL," +
                 "  password TEXT(16)," +
@@ -33,12 +34,14 @@ public class MyDBOpenHelper extends SQLiteOpenHelper {
                 "  loginStatus TEXT(10)" +
                 ");");
 
+        //好友列表
         db.execSQL("CREATE TABLE IF NOT EXISTS friends (" +
                 "  id INTEGER PRIMARY KEY AUTOINCREMENT ," +
                 "  userId text(16) NOT NULL," +
                 "  userFriendId text(16)" +
                 ");");
 
+        //朋友圈信息表表
         db.execSQL("CREATE TABLE IF NOT EXISTS moments (" +
                 "  id INTEGER PRIMARY KEY AUTOINCREMENT ," +
                 "  userId text NOT NULL," +
@@ -49,6 +52,7 @@ public class MyDBOpenHelper extends SQLiteOpenHelper {
                 "  likeUserId text" +
                 ");");
 
+        //聊天消息表
         db.execSQL("CREATE TABLE IF NOT EXISTS message (" +
                 "  id INTEGER PRIMARY KEY AUTOINCREMENT ," +
                 "  sendUserId text(16)," +

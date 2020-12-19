@@ -35,10 +35,10 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password);
 
         Intent getUserid = getIntent();
-
+        String account = getUserid.getStringExtra("useridOrphone");
         //注册跳转到登录后，在登录的账号框自动填充微信号
-        if(!getUserid.getStringExtra("userId").equals(""))
-            phoneOrname.setText(getUserid.getStringExtra("userId"));
+        if(!account.equals(""))
+            phoneOrname.setText(account);
 
 
         submit = (Button)findViewById(R.id.login_submit);

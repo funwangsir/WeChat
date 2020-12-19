@@ -54,7 +54,5 @@ public class Fragment2 extends Fragment {
         for (User u: userFriends) {//将其转换为FriendList类型
             friendLists.add(new FriendList(R.drawable.ic_default_img,u));//头像均暂时使用默认图片
         }
-
-
     }
 }

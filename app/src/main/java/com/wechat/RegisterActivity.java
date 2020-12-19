@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             Intent toLoginActivity = new Intent(RegisterActivity.this,LoginActivity.class);
             //注册后将微信号传递给登录，填充到登录的账号框
-            toLoginActivity.putExtra("userId",userId);
+            toLoginActivity.putExtra("useridOrphone",userId);
             startActivity(toLoginActivity);
         }
     }
