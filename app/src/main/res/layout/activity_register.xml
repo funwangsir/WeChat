@@ -9,22 +9,24 @@
 
     <!--    上传头像-->
     <LinearLayout
-        android:id="@+id/uploadHeadImg"
-        android:layout_width="match_parent"
+        android:id="@+id/re_upload_headimg"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="50dp">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:src="@drawable/head_img" />
+            android:id="@+id/re_headimg"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/default_head" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:text="上传头像"/>
     </LinearLayout>
 

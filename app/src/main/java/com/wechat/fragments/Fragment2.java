@@ -1,7 +1,6 @@
 package com.wechat.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.wechat.MainActivity;
 import com.wechat.R;
-import com.wechat.adapter.FriendList;
 import com.wechat.adapter.FriendListAdapter;
 import com.wechat.db.SQLiteHelper;
 import com.wechat.entity.User;
@@ -25,7 +23,7 @@ public class Fragment2 extends Fragment {
     private MainActivity mainActivity;
     private User user;
     private SQLiteHelper sqLiteHelper;
-    List<FriendList> friendLists;//存储好友信息的列表
+    List<User> friendLists;//存储好友信息的列表
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.menu_fragment_2,container,false);
@@ -52,7 +50,7 @@ public class Fragment2 extends Fragment {
         //查询好友列表
         List<User> userFriends = sqLiteHelper.selectFriends(user.getUserId());
         for (User u: userFriends) {//将其转换为FriendList类型
-            friendLists.add(new FriendList(R.drawable.ic_default_img,u));//头像均暂时使用默认图片
+            friendLists.add(u);//头像均暂时使用默认图片
         }
     }
 }

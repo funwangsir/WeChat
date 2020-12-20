@@ -1,6 +1,9 @@
 package com.wechat.adapter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.wechat.R;
 
 import java.util.List;
-
+//聊天界面 消息列表
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> {
 
     private List<MessageList> mMsgList;
@@ -29,6 +32,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
         RelativeLayout receiveLayout;//收消息的布局
 
+        ImageView sendHeadImg;//发送消息的头像
+
+        ImageView receiveHeadImg;//接收消息的头像
+
         TextView sendMsg;//发送内容
 
         TextView receiveMsg;//接收内容
@@ -37,6 +44,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             super(view);
             sendLayout = (RelativeLayout) view.findViewById(R.id.send_msg_layout);
             receiveLayout = (RelativeLayout) view.findViewById(R.id.receive_msg_layout);
+            sendHeadImg = (ImageView)view.findViewById(R.id.send_msg_head_img);
+            receiveHeadImg = (ImageView)view.findViewById(R.id.receive_msg_head_img);
             sendMsg = (TextView) view.findViewById(R.id.send_msg_content);
             receiveMsg = (TextView) view.findViewById(R.id.receive_msg_content);
         }
@@ -58,14 +67,27 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MessageList ms = mMsgList.get(position);//获取RecyclerView中的当前的对象
+
+        byte[] img;
+        Bitmap bitmap;
         //发送该条消息的人为当前登录用户，就显示右边消息，反之则显示在左边
-        if(ms.getMessage().getSendUserId().equals(loginUserId)){
+        if(ms.getMessage().getSendUserId().equals(loginUserId)){//发送消息者
             holder.sendLayout.setVisibility(View.VISIBLE);//显示
             holder.receiveLayout.setVisibility(View.GONE);//隐藏
+
+            img = ms.getSendUser().getAvatar();
+            bitmap = BitmapFactory.decodeByteArray(img,0,img.length);
+            holder.sendHeadImg.setImageBitmap(bitmap);
+
             holder.sendMsg.setText(ms.getMessage().getTextMessage());//设置文本内容
-        }else{
+        }else{//接收消息者
             holder.receiveLayout.setVisibility(View.VISIBLE);
             holder.sendLayout.setVisibility(View.GONE);
+
+            img= ms.getReceiveUser().getAvatar();
+            bitmap= BitmapFactory.decodeByteArray(img,0,img.length);
+            holder.receiveHeadImg.setImageBitmap(bitmap);
+
             holder.receiveMsg.setText(ms.getMessage().getTextMessage());
         }
     }

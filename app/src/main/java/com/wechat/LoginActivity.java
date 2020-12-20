@@ -73,10 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-
-
-    //数据库查询校验账号密码是否正确 -
-    // 如果验证正确，不管输入的手机号还是微信号，都返回微信号
+    //数据库查询校验账号密码是否正确 - 如果验证正确，不管输入的手机号还是微信号，都返回微信号
     public String AccountisRight(){
         if(formatIsRight()) {//账号密码为空就不走数据库流程
             //数据库交互

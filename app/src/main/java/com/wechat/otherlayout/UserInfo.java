@@ -3,10 +3,13 @@ package com.wechat.otherlayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ public class UserInfo extends AppCompatActivity {
     private User user;//搜索的用户对象
     private SQLiteHelper sqLiteHelper;
 
+    private ImageView headimg;//头像
     private TextView name;//名称
     private TextView nickName;//昵称
     private TextView wechatid;//微信号
@@ -40,12 +44,13 @@ public class UserInfo extends AppCompatActivity {
         sqLiteHelper = new SQLiteHelper(this);
 
         //获取前一个活动传递过来的User对象
-        user  = (User)getIntent().getSerializableExtra("userInfo");
-
+        String userid  = getIntent().getStringExtra("userId");
+        user = sqLiteHelper.getUserInfo(userid);
         addFriendOrSendMsg = (LinearLayout)findViewById(R.id.add_friend);
         userOptions = (TextView)findViewById(R.id.user_options);
 
-        seachtInfoAndFill(user);//查询数据并填充
+        seachtInfoAndFill();//查询数据并填充
+
         //点击按钮
         addFriendOrSendMsg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +65,7 @@ public class UserInfo extends AppCompatActivity {
                 }else if(userOptions.getText().equals("发送消息")){
                     //跳转到聊天页面，同时将当前这个人的userId作为receiveUseId
                     Intent intent = new Intent(UserInfo.this,Talk.class);
-                    intent.putExtra("receiveUser",user);//传递User整个对象
+                    intent.putExtra("receiveUserId",user.getUserId());//传递User整个对象
                     startActivity(intent);
                 }
             }
@@ -75,13 +80,18 @@ public class UserInfo extends AppCompatActivity {
         });
     }
 
-    public void seachtInfoAndFill(User user){
+    public void seachtInfoAndFill(){
+        headimg = (ImageView)findViewById(R.id.user_info_headimg);
         name = (TextView)findViewById(R.id.user_info_Name);
         nickName = (TextView)findViewById(R.id.user_info_nickname);
         wechatid = (TextView)findViewById(R.id.user_info_userid);
         area = (TextView)findViewById(R.id.user_info_area);
         introduction = (TextView)findViewById(R.id.user_info_introduction);
 
+
+        byte[] img = user.getAvatar();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(img,0,img.length);
+        headimg.setImageBitmap(bitmap);
         name.setText(user.getName());
         nickName.setText("昵称："+user.getNickname());
         wechatid.setText("微信号："+user.getUserId());

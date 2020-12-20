@@ -5,8 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -53,8 +54,9 @@ public class MyMoments extends AppCompatActivity {
         TextView nickname = (TextView)findViewById(R.id.moments_my_nickname);
         ImageView headimg = (ImageView)findViewById(R.id.moments_my_headimg);
         nickname.setText(user.getNickname());
-//        headimg.setImageResource();
-
+        byte[] img = user.getAvatar();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(img,0,img.length);
+        headimg.setImageBitmap(bitmap);
 
         //加载朋友圈信息
         List<Moments> momentsList = sqLiteHelper.getMoments(sqLiteHelper.selectLoginIn());
@@ -62,7 +64,7 @@ public class MyMoments extends AppCompatActivity {
         List<MomentList> mMomentList = new ArrayList<>();//容器适配器，用于加载到RecyclerView
         for (Moments m:momentsList) {//将查询出来的数据添加到容器中
             User u = sqLiteHelper.getUserInfo(m.getUserId());//从Moments表中的userid找到user对象
-            mMomentList.add(new MomentList(R.drawable.ic_avatar, u, m));
+            mMomentList.add(new MomentList(u, m));
         }
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.moments_list);//绑定RecyclerView
         LinearLayoutManager llm = new LinearLayoutManager(this);

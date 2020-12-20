@@ -2,6 +2,7 @@ package com.wechat.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.wechat.entity.User;
 import com.wechat.otherlayout.Talk;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -38,6 +40,11 @@ public class Fragment1 extends Fragment {
     private User loginUser;//获取当前登录用户的信息
 
     private  Message message;
+
+
+    private  RecyclerView recyclerView;
+    private LinearLayoutManager llm;
+    private TalkListAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.menu_fragment_1,container,false);
@@ -48,12 +55,21 @@ public class Fragment1 extends Fragment {
         getTalkList();//获取聊天信息
 
         //绑定到RecylerView
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.talk_list);
-        LinearLayoutManager llm = new LinearLayoutManager(mainActivity);
+        recyclerView = (RecyclerView)view.findViewById(R.id.talk_list);
+        llm = new LinearLayoutManager(mainActivity);
         recyclerView.setLayoutManager(llm);
-        TalkListAdapter adapter = new TalkListAdapter(talkLists,mainActivity);//填充到RecylerView的适配器
+        adapter = new TalkListAdapter(talkLists,mainActivity);//填充到RecylerView的适配器
         recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTalkList();//获取聊天信息
+        //返回就更新
+        TalkListAdapter newadapter = new TalkListAdapter(talkLists,mainActivity);//填充到RecylerView的适配器
+        recyclerView.setAdapter(newadapter);
     }
 
     public void getTalkList(){
@@ -65,8 +81,9 @@ public class Fragment1 extends Fragment {
             //遍历获取当前用户的所有朋友信息，查询出有聊天记录的消息列表
             message = new Message();
             message = sqLiteHelper.selectNewMessage(loginUser.getUserId(),f.getUserId());
-            //图片用默认的、名字就是当前朋友的名字、消息就是查询出来的消息
-            talkLists.add(new TalkList(R.drawable.ic_default_img,f,message.getTextMessage()));
+            //名字就是当前朋友的名字、消息就是查询出来的消息
+            talkLists.add(new TalkList(f,message));
         }
+        Collections.sort(talkLists);//按照消息事件对主界面的聊天列表进行排序
     }
 }

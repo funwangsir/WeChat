@@ -54,7 +54,7 @@
                 android:layout_height="100dp"
                 android:layout_marginLeft="20dp"
                 android:background="#f7f7f7"
-                android:src="@drawable/ic_add"
+                android:src="@drawable/ic_sendmoments_addimg"
                 />
         </LinearLayout>
 

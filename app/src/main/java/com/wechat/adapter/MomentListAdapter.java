@@ -3,6 +3,8 @@ package com.wechat.adapter;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +76,9 @@ public class MomentListAdapter extends RecyclerView.Adapter<MomentListAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MomentList momentList = mMomentList.get((position));
-        holder.headImg.setImageResource(momentList.getImgId());
+        byte[] img = momentList.getUser().getAvatar();
+        Bitmap bitmap = BitmapFactory.decodeByteArray( img,0, img.length);
+        holder.headImg.setImageBitmap(bitmap);
         holder.userName.setText(momentList.getUser().getName());
         holder.momentsContent.setText(momentList.getMoments().getTextContent());
     }

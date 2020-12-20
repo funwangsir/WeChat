@@ -4,22 +4,12 @@ import com.wechat.entity.Moments;
 import com.wechat.entity.User;
 
 public class MomentList {
-    private int imgId;
     private User user;
     private Moments moments;
 
-    public MomentList(int imgId, User user, Moments moments) {
-        this.imgId = imgId;
+    public MomentList(User user, Moments moments) {
         this.user = user;
         this.moments = moments;
-    }
-
-    public int getImgId() {
-        return imgId;
-    }
-
-    public void setImgId(int imgId) {
-        this.imgId = imgId;
     }
 
     public User getUser() {
