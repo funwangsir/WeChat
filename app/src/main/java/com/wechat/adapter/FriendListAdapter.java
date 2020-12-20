@@ -2,6 +2,8 @@ package com.wechat.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,7 @@ import java.util.*;
 //好友列表适配器，适配好友信息和头像图片
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
 
-    private List<FriendList> mFriendList;
+    private List<User> mFriendList;
 
     private Context context;//当前的活动对象
 
@@ -39,7 +41,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         }
     }
 
-    public FriendListAdapter(List<FriendList> friendLists,Context context){
+    public FriendListAdapter(List<User> friendLists,Context context){
         mFriendList = friendLists;
         this.context = context;
     }
@@ -53,12 +55,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             @Override
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
-                FriendList f = mFriendList.get(position);//获取对象数据
+                User user = mFriendList.get(position);//获取对象数据
                 //传递user对象跳转到个人信息页面
-                User user = f.getUser();
 
                 Intent intent = new Intent(context, UserInfo.class);
-                intent.putExtra("userInfo",user);
+                intent.putExtra("userId",user.getUserId());
                 context.startActivity(intent);
             }
         });
@@ -66,12 +67,10 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             @Override
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
-                FriendList f = mFriendList.get(position);//获取对象数据
+                User user = mFriendList.get(position);//获取对象数据
                 //传递user对象跳转到个人信息页面
-                User user = f.getUser();
-
                 Intent intent = new Intent(context, UserInfo.class);
-                intent.putExtra("userInfo",user);
+                intent.putExtra("userId",user.getUserId());
                 context.startActivity(intent);
 
             }
@@ -81,9 +80,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FriendList friendList = mFriendList.get(position);
-        holder.headImg.setImageResource(friendList.getImageId());
-        holder.friendName.setText(friendList.getUser().getName());
+        User friendList = mFriendList.get(position);
+        byte[] img = friendList.getAvatar();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(img,0,img.length);
+        holder.headImg.setImageBitmap(bitmap);
+        holder.friendName.setText(friendList.getName());
     }
 
     @Override

@@ -36,7 +36,7 @@ public class Setting extends AppCompatActivity {
                 sqLiteHelper.userLoginOut(user.getUserId());
 
                 //退出登录，要将当前的useriId传递过去，便于在登录框显示用户id
-                toLoginout.putExtra("userId",user.getUserId());
+                toLoginout.putExtra("useridOrphone",user.getUserPhone());
                 startActivity(toLoginout);
             }
         });

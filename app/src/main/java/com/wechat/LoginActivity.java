@@ -35,10 +35,10 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password);
 
         Intent getUserid = getIntent();
-
+        String account = getUserid.getStringExtra("useridOrphone");
         //注册跳转到登录后，在登录的账号框自动填充微信号
-        if(!getUserid.getStringExtra("userId").equals(""))
-            phoneOrname.setText(getUserid.getStringExtra("userId"));
+        if(!account.equals(""))
+            phoneOrname.setText(account);
 
 
         submit = (Button)findViewById(R.id.login_submit);
@@ -73,10 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-
-
-    //数据库查询校验账号密码是否正确 -
-    // 如果验证正确，不管输入的手机号还是微信号，都返回微信号
+    //数据库查询校验账号密码是否正确 - 如果验证正确，不管输入的手机号还是微信号，都返回微信号
     public String AccountisRight(){
         if(formatIsRight()) {//账号密码为空就不走数据库流程
             //数据库交互

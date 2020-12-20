@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.wechat.MainActivity;
 import com.wechat.R;
 import com.wechat.adapter.MessageList;
 import com.wechat.adapter.MessageListAdapter;
@@ -32,7 +34,8 @@ import java.util.List;
 public class Talk extends AppCompatActivity {
 
     private SQLiteHelper sqLiteHelper;
-
+    private User sendUser;//发送消息的用户，即当前登录的用户
+    private User receiveUser;//接收消息的用户
     private ImageView back;
     private TextView receiveMsgName;
 
@@ -44,9 +47,6 @@ public class Talk extends AppCompatActivity {
     private TextView sendContent;
     private TextView receiveContent;
 
-    //每次聊天都要获取到发送和接收方的userid
-    private String sendUserId;//发送者的id就是当前登录的userid
-    private String receiveUserId;
 
     private List<MessageList> msgList;//消息列表（包含头像信息）
     @Override
@@ -73,12 +73,13 @@ public class Talk extends AppCompatActivity {
         sendButton = (Button)findViewById(R.id.send_button);
 
 
+        //获取当前登录的user
+        sendUser = sqLiteHelper.selectLoginIn();
 
         //获取传递过来的User对象
-        User receiveUser = (User)getIntent().getSerializableExtra("receiveUser");
+        String receiveUserid = getIntent().getStringExtra("receiveUserId");
+        receiveUser = sqLiteHelper.getUserInfo(receiveUserid);
         receiveMsgName.setText(receiveUser.getName());
-        sendUserId = sqLiteHelper.selectLoginIn().getUserId();//当前登录用户id
-        receiveUserId = receiveUser.getUserId();//上一个活动传递过来的用户id
 
     }
 
@@ -87,6 +88,8 @@ public class Talk extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(Talk.this,MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -119,17 +122,17 @@ public class Talk extends AppCompatActivity {
 
     public void loadMessageList(){
         //查询出聊天记录
-        List<Message> messageList = sqLiteHelper.selectMessage(sendUserId,receiveUserId);
+        List<Message> messageList = sqLiteHelper.selectMessage(sendUser.getUserId(),receiveUser.getUserId());
         msgList = new ArrayList<>();
         for (Message m:messageList) {
-            msgList.add(new MessageList(R.drawable.ic_default_img,m));
+            msgList.add(new MessageList(sendUser,receiveUser,m));//将当前登录用户的user传递过去
         }
 
         //将数据绑定到RecyclerView中
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.send_msg_list);//绑定RecyclerView
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        MessageListAdapter adapter = new MessageListAdapter(msgList,sendUserId);
+        MessageListAdapter adapter = new MessageListAdapter(msgList,sendUser.getUserId());
         recyclerView.setAdapter(adapter);
     }
 
@@ -141,8 +144,8 @@ public class Talk extends AppCompatActivity {
             public void onClick(View view) {
                 Message message = new Message();
 
-                message.setSendUserId(sendUserId);
-                message.setReceiveUserId(receiveUserId);
+                message.setSendUserId(sendUser.getUserId());
+                message.setReceiveUserId(receiveUser.getUserId());
                 message.setTextMessage(sendMsgEdit.getText().toString());//发送消息内容
                 message.setImageMessage("");
                 message.setCreateTime(String.valueOf(System.currentTimeMillis()));//当前时间戳

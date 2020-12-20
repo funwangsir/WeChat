@@ -7,5 +7,5 @@
     <dimen name="default_list_high">50dp</dimen>
 
     <!--    顶部标题字体大小-->
-    <dimen name="default_title_size">24sp</dimen>
+    <dimen name="default_title_size">22sp</dimen>
 </resources>

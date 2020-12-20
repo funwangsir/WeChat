@@ -93,8 +93,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         replaceFragment(new Fragment1());//打开应用时加载第一个碎片
         bottom_bar_1.performClick();//打开应用时，模拟一次点击，选中第一个
-
-
     }
 
 
@@ -104,8 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bottom_bar_2 = (TextView) findViewById(R.id.bottom_bar_2);
         bottom_bar_3 = (TextView) findViewById(R.id.bottom_bar_3);
         bottom_bar_4 = (TextView) findViewById(R.id.bottom_bar_4);
-
-
 
         topBar = (RelativeLayout) findViewById(R.id.top_toolbar);
         bottomBar = (LinearLayout) findViewById(R.id.bottom_bar);
@@ -261,8 +257,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void checkLoginIn(){
         if(CheckObjectIsNullUtils.objCheckIsNull(sqLiteHelper.selectLoginIn())){
             Intent toLogin = new Intent(MainActivity.this,LoginActivity.class);
-            toLogin.putExtra("userId","");
+            toLogin.putExtra("useridOrphone","");
             startActivity(toLogin);
+            finish();
         }else{
             //加载聊天记录
             user = sqLiteHelper.selectLoginIn();//返回user的信息
@@ -274,12 +271,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(MainActivity.this, Search.class);
         intent.putExtra("userId",user.getUserId());
         startActivity(intent);
-    }
-    //通过UserId查询xx信息
-
-    //便于其它碎片共享User的数据
-    public User getUserInfo(){
-        return user;
     }
 
 }

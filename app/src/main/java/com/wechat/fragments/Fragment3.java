@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.wechat.MainActivity;
 import com.wechat.R;
-import com.wechat.otherlayout.Moments;
+import com.wechat.otherlayout.MyMoments;
 
 //碎片3
 public class Fragment3 extends Fragment {
@@ -25,7 +25,7 @@ public class Fragment3 extends Fragment {
         gotoMoments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gotomoments = new Intent(mainActivity, Moments.class);
+                Intent gotomoments = new Intent(mainActivity, MyMoments.class);
                 startActivity(gotomoments);
             }
         });

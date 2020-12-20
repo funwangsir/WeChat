@@ -1,7 +1,10 @@
 package com.wechat.entity;
 
+import android.content.Intent;
+
 //朋友圈对象
-public class Moments {
+//实现Comparable用于对朋友圈集合通过时间戳比较排序
+public class Moments implements Comparable<Moments>{
     private int id;//主键
     private String userId;//发朋友圈的微信号
     private String  textContent;//文本内容
@@ -78,5 +81,12 @@ public class Moments {
         sb.append(", likeUserId='").append(likeUserId).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(Moments moments) {
+        //按照时间降序
+        long time = Long.parseLong(moments.getPublishTime()) - Long.parseLong(this.publishTime);
+        return (int)time;
     }
 }

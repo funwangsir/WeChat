@@ -7,7 +7,7 @@ public class User implements Serializable {
     private String password;//密码
     private String name;//真实姓名
     private String nickname;//昵称
-    private String avatar;//头像二进制文件
+    private byte[] avatar;//头像二进制文件
     private String gender;//性别
     private String area;//地区 中国大陆 + 城市
     private String introduction;//个人简介
@@ -46,11 +46,11 @@ public class User implements Serializable {
         this.nickname = nickname;
     }
 
-    public String getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
 
