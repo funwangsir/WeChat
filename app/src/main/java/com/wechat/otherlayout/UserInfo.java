@@ -43,7 +43,7 @@ public class UserInfo extends AppCompatActivity {
 
         sqLiteHelper = new SQLiteHelper(this);
 
-        //获取前一个活动传递过来的User对象
+        //获取前一个活动传递过来的Userid，查找其相信信息存储到user对象
         String userid  = getIntent().getStringExtra("userId");
         user = sqLiteHelper.getUserInfo(userid);
         addFriendOrSendMsg = (LinearLayout)findViewById(R.id.add_friend);

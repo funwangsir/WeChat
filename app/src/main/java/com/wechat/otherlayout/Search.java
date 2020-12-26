@@ -103,10 +103,11 @@ public class Search extends AppCompatActivity {
     }
 
     public void search(String userIdOrPhone){
+        //通过微信号或者手机号查询到他的用户信息
         User u = sqLiteHelper.getUserInfoByuserIdOrPhone(userIdOrPhone);
         if(!CheckObjectIsNullUtils.objCheckIsNull(u)){//用户存在，跳转到用户个人信息页
             Intent intent = new Intent(Search.this,UserInfo.class);
-            intent.putExtra("userInfo",u);//User被序列化后可以传递
+            intent.putExtra("userId",u.getUserId());//User被序列化后可以传递
             startActivity(intent);
         }else{//用户不存在
             Toast t = Toast.makeText(Search.this,null,Toast.LENGTH_LONG);

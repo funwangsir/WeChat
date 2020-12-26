@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //跳转到登录
         toRegister = (TextView)findViewById(R.id.toRegister);
         toRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,8 +58,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(toregister);
             }
         });
-
-
     }
 
     //数据校验是否合法

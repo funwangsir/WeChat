@@ -31,7 +31,7 @@ public class MomentListAdapter extends RecyclerView.Adapter<MomentListAdapter.Vi
         ImageView headImg;
         TextView userName;
         TextView momentsContent;
-
+        ImageView optionMoments;//点赞、评论
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -39,6 +39,7 @@ public class MomentListAdapter extends RecyclerView.Adapter<MomentListAdapter.Vi
             headImg = (ImageView) itemView.findViewById(R.id.moments_headimg);
             userName = (TextView)itemView.findViewById(R.id.moments_username);
             momentsContent = (TextView)itemView.findViewById(R.id.moments_content);
+            optionMoments = (ImageView)itemView.findViewById(R.id.option_comments);
         }
     }
     public MomentListAdapter(List<MomentList> momentslist,Context context){
@@ -51,21 +52,32 @@ public class MomentListAdapter extends RecyclerView.Adapter<MomentListAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.moments_list,parent,false);
         final ViewHolder viewHolder = new ViewHolder(view);
-        viewHolder.momentsListView.setOnClickListener(new View.OnClickListener() {//点击整个元素监听事件
+        //点击整个元素监听事件
+        viewHolder.momentsListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
+
+        //点赞、评论悬浮框
+        viewHolder.optionMoments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
+        //点击头像跳转到个人信息页
         viewHolder.headImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
                 MomentList m = mMomentList.get(position);//获取对象数据
                 //传递user对象跳转到个人信息页面
-                User user = m.getUser();
                 Intent intent = new Intent(context, UserInfo.class);
-                intent.putExtra("userInfo",user);
+                intent.putExtra("userId",m.getUser().getUserId());
                 context.startActivity(intent);
 
             }

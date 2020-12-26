@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
         //这些为了点击非PopupWindow区域，PopupWindow会消失的
-        // 如果没有下面的代码的话，你会发现，当你把PopupWindow显示出来了
+        //如果没有下面的代码的话，你会发现，当你把PopupWindow显示出来了
         //无论你按多少次后退键 PopupWindow并不会关闭，而且退不出程序
         // 加上下述代码可以解决这个问题
         popWindow.setTouchable(true);
@@ -241,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        设置popupWindow显示的位置，参数依次是参照View，x轴的偏移量，y轴的偏移量
         popWindow.showAsDropDown(v,-i+120, 40);
 
-
         addFreind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -249,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 search();
             }
         });
-
     }
 
 
